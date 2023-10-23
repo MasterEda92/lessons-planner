@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply border-2 font-bold rounded-lg hover:underline py-1 px-4
+}
+
+.btn-primary {
+  @apply border-purple-950 text-purple-950
+}
+
+.btn-secondary {
+  @apply border-gray-600 text-gray-600
+}
+
+.btn-success {
+  @apply border-green-600 text-green-600
+}
+
+.btn-cancel {
+  @apply border-red-600 text-red-600
+}
+
+.nav-link {
+  @apply font-normal text-purple-950  hover:underline
+}
