@@ -8,6 +8,7 @@ import (
 	classsubjects "github.com/MasterEda92/lessons-planner/class_subjects"
 	"github.com/MasterEda92/lessons-planner/classes"
 	"github.com/MasterEda92/lessons-planner/subjects"
+	"github.com/MasterEda92/lessons-planner/timetables"
 )
 
 // App struct
@@ -16,18 +17,21 @@ type App struct {
 	ClassRepo         classes.IClassesRepo
 	SubjectRepo       subjects.ISubjectsRepo
 	ClassSubjectsRepo classsubjects.IClassSubjectsRepo
+	TimetableRepo     timetables.ITimetablesRepo
 }
 
 // NewApp creates a new App application struct
 func NewApp(repo classes.IClassesRepo,
 	subRepo subjects.ISubjectsRepo,
 	clSubRepo classsubjects.IClassSubjectsRepo,
+	timetableRepo timetables.ITimetablesRepo,
 ) *App {
 
 	return &App{
 		ClassRepo:         repo,
 		SubjectRepo:       subRepo,
 		ClassSubjectsRepo: clSubRepo,
+		TimetableRepo:     timetableRepo,
 	}
 }
 
@@ -203,4 +207,16 @@ func (a *App) DeleteClassSubject(cl_subject DTOs.DeleteClassSubjectDTO) (*DTOs.D
 	fmt.Printf("class-subject deleted: %v", deleted)
 
 	return deleted, nil
+}
+
+// timetable
+
+// get a timetable entry for a specific day and hour
+func (a *App) GetTimetableByDayAndHour(day int, hour string) (*DTOs.TimetableDto, error) {
+	timetable, err := a.TimetableRepo.GetByDayAndHour(day, hour)
+	if err != nil {
+		return nil, err
+	}
+
+	return timetable, nil
 }

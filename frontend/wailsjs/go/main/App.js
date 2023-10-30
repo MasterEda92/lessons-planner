@@ -50,6 +50,10 @@ export function GetSubjectById(arg1) {
   return window['go']['main']['App']['GetSubjectById'](arg1);
 }
 
+export function GetTimetableByDayAndHour(arg1, arg2) {
+  return window['go']['main']['App']['GetTimetableByDayAndHour'](arg1, arg2);
+}
+
 export function UpdateClass(arg1) {
   return window['go']['main']['App']['UpdateClass'](arg1);
 }

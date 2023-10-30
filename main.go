@@ -4,6 +4,7 @@ import (
 	"embed"
 
 	classsubjects "github.com/MasterEda92/lessons-planner/class_subjects"
+	"github.com/MasterEda92/lessons-planner/timetables"
 
 	"github.com/MasterEda92/lessons-planner/classes"
 	"github.com/MasterEda92/lessons-planner/db"
@@ -85,9 +86,10 @@ func main() {
 	class_repo := classes.NewClassesRepo(client)
 	subject_repo := subjects.NewSubjectsRepo(client)
 	clsub_repo := classsubjects.NewClassSubjectsRepo(client)
+	timetable_repo := timetables.NewTimetablesRepo(client)
 
 	// Create an instance of the app structure
-	app := NewApp(class_repo, subject_repo, clsub_repo)
+	app := NewApp(class_repo, subject_repo, clsub_repo, timetable_repo)
 
 	// Create application with options
 	err := wails.Run(&options.App{

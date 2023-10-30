@@ -26,6 +26,8 @@ export function GetClassSubjectById(arg1:string):Promise<DTOs.ClassSubjectsDTO>;
 
 export function GetSubjectById(arg1:string):Promise<DTOs.SubjectDto>;
 
+export function GetTimetableByDayAndHour(arg1:number,arg2:string):Promise<DTOs.TimetableDto>;
+
 export function UpdateClass(arg1:DTOs.UpdateClassDto):Promise<DTOs.UpdateClassResponseDto>;
 
 export function UpdateClassSubject(arg1:DTOs.UpdateClassSubjectDTO):Promise<DTOs.UpdateClassSubjectResponseDTO>;
