@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator db {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model Class {
+  id String @id
+  name String @unique
+  //grade Grade
+  grade Int
+  pupil_count Int
+  pupil_count_time_increase Int
+  subjects ClassSubject[]
+}
+
+model Subject {
+  id String @id
+  name String @unique
+  notes String?
+  classes ClassSubject[]
+}
+
+model ClassSubject {
+  id String @id
+  class Class @relation(fields: [classId], references: [id])
+  classId String
+  subject Subject @relation(fields: [subjectId], references: [id])
+  subjectId String
+  sa Boolean
+  ex Boolean
+  ka Boolean
+  timetables Timetable[]
+  teachingUnits TeachingUnit[]
+
+  @@unique([classId, subjectId])
+}
+
+model Timetable {
+  id String @id
+  //day Day
+  day Int
+  hours TimetableHours[]
+  classSubject ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId String
+}
+
+model Hour {
+  id String @id
+  hour String
+  timetables TimetableHours[]
+  teachingUnits TeachingUnitHours[]
+}
+
+model TimetableHours {
+  id String @id
+  timetable Timetable @relation(fields: [timetableId], references: [id])
+  timetableId String
+  hour Hour @relation(fields: [hourId], references: [id])
+  hourId String
+}
+
+model TeachingUnit {
+  id String @id
+  date DateTime
+  hours TeachingUnitHours[]
+  classSubject ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId String
+  theme String
+  implementation String
+  notes String?
+  attachments TeachingUnitAttachments[]
+  sa Boolean
+  ex Boolean
+  ka Boolean
+}
+
+model TeachingUnitHours {
+  id String @id
+  teachingUnit TeachingUnit @relation(fields: [teachingUnitId], references: [id])
+  teachingUnitId String
+  hour Hour @relation(fields: [hourId], references: [id])
+  hourId String
+}
+
+model Attachment {
+  id String @id
+  attachment String
+  teachingUnits TeachingUnitAttachments[]
+}
+
+model TeachingUnitAttachments {
+  id String @id
+  attachment Attachment @relation(fields: [attachmentId], references: [id])
+  attachmentId String 
+  teachingUnit TeachingUnit @relation(fields: [teachingUnitId], references: [id])
+  teachingUnitId String
+}
+
+// enum Day {
+//   MONDAY
+//   TUESDAY
+//   WEDNESDAY
+//   THURSDAY
+//   FRIDAY
+// }
+
+// enum Grade {
+//   ONE @map ("1")
+//   TWO @map ("2")
+//   THREE @map ("3")
+//   FOUR @map ("4")
+//   FIVE @map ("5")
+//   SIX @map ("6")
+//   SEVEN @map ("7")
+//   EIGHT @map ("8")
+//   NINE @map ("9")
+//   TEN @map ("10")
+//   ELEVEN @map ("11")
+//   TWELVE @map ("12")
+//   THIRTEEN @map ("13")
+// }
